@@ -1,0 +1,67 @@
+Arquitectura General
+La solución estará basada en microservicios serverless utilizando AWS Lambda y otros servicios de AWS para proporcionar escalabilidad, alta disponibilidad y costos optimizados.
+
+Componentes Principales
+Cliente (Frontend)
+
+Aplicaciones web y móviles consumen las APIs.
+
+Se entrega mediante Amazon S3 y CloudFront para contenido estático.
+
+API Gateway
+
+Actúa como punto de entrada para los clientes.
+
+Maneja autenticación, autorización y rate limiting.
+
+Conectado a AWS Lambda para ejecutar lógica de negocio.
+
+AWS Lambda (Backend en Java)
+
+Cada microservicio se implementa como una función Lambda en Java con Spring Boot o Quarkus.
+
+Se ejecuta solo cuando es necesario, optimizando costos.
+
+Maneja lógica de negocio específica de cada servicio.
+
+DynamoDB (Base de Datos NoSQL)
+
+Se usa como almacenamiento para datos estructurados y semiestructurados.
+
+Integración con Lambda mediante SDK de AWS.
+
+Modelado basado en acceso para rendimiento óptimo.
+
+CloudWatch
+
+Monitoreo y logging de Lambda y otros servicios.
+
+Alarmas y métricas de rendimiento.
+
+S3 (Almacenamiento de Archivos)
+
+Usado para almacenamiento de imágenes, documentos y otros archivos estáticos.
+
+Integrado con CloudFront para distribución rápida de contenido.
+
+CloudFront
+
+Red de distribución de contenido (CDN) para reducir latencia.
+
+Entrega archivos de S3 y respuestas cacheadas del backend.
+
+Flujo de Datos
+Cliente → Realiza una petición a API Gateway.
+
+API Gateway → Valida la petición y la redirige a una AWS Lambda.
+
+AWS Lambda → Ejecuta la lógica de negocio, consulta/actualiza DynamoDB si es necesario.
+
+DynamoDB → Responde a Lambda con los datos solicitados.
+
+AWS Lambda → Devuelve la respuesta al API Gateway.
+
+API Gateway → Responde al cliente con los datos.
+
+Opcional: Si hay archivos estáticos, se entregan desde S3 vía CloudFront.
+
